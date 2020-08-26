@@ -28,7 +28,7 @@ namespace ConsoleApp1
 
             } while (clave != numero);
 
-           
+            Console.WriteLine("Ganaste");
 
 
         }
