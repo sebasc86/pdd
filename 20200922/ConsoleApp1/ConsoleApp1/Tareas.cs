@@ -4,12 +4,17 @@ using System.Text;
 
 namespace ConsoleApp1
 {
-    class Tareas
+    public class Tareas
     {
-        public String titulo { get; set; }
-        public String vencimiento { get; set; }
-        public int estimacion { get; set; }
+        public string titulo { get; set; }
+        public string vencimiento { get; set; }
+        public string estimacion { get; set; }
         public Recursos responsable { get; set; }
-        public String estado { get; set; }
+        public string estado { get; set; }
+
+        public Tareas(string titulo, string vencimiento, string estimacion, Recursos recursos, string estado)
+        {
+        }
+
     }
 }
