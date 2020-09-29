@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleApp1
+namespace TP_Parcial
 {
     public class Detalles
     {
-        public String fecha { get; set; }
+        public DateTime fecha { get; set; }
         public int tiempo { get; set; }
-        public Tareas tareas { get; set; }
         public Recursos recurso { get; set; }
-       
+        public Tareas tarea { get; set; }
     }
 }
