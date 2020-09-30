@@ -6,7 +6,7 @@ namespace TP_Parcial
 {
     public class Recursos
     {
-        public string nombre { get; set; }
+        public string Nombre { get; set; }
         public Usuarios Usuario { get; set; }
     }
 }

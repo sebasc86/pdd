@@ -8,8 +8,6 @@ namespace TP_Parcial
     {
         static void Main(string[] args)
         {
-
-           
             List<Tareas> tareas = new List<Tareas>();
             tareas.Add(new Tareas("Ejercicio1", new DateTime(2020, 5, 23), 10, new Recursos(), "Realizada"));
             tareas.Add(new Tareas("Ejercicio2", new DateTime(2020, 9, 12), 12, new Recursos(), "Realizada"));
@@ -20,7 +18,6 @@ namespace TP_Parcial
             {
                 Console.Write("{0}\t", i.ToString());
             }
-
         }
 
     }
