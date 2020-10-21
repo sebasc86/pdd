@@ -1,0 +1,52 @@
+﻿@page "/tasklist"
+
+@using BlazorApp1.Data
+@inject TasksService TasksService
+
+<h3>List</h3>
+
+@if (tasks == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Estimate</th>
+                <th>Expiration</th>
+                <th>State</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var task in tasks)
+            {
+                <tr>
+                    <td>@task.Id</td>
+                    <td>@task.Title</td>
+                    <td>@task.Estimate</td>
+                    <td>@task.Expiration</td>
+                    <td>@task.State</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+
+@code {
+    private List<Tasks> tasks;
+
+    protected override async Task OnInitializedAsync()
+    {
+        tasks = TasksService.FetchTasks();
+    }
+
+
+
+}
