@@ -3,54 +3,20 @@ using System;
 using BlazorApp1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BlazorApp1.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201104011608_Migracion")]
+    partial class Migracion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.9");
-
-            modelBuilder.Entity("BlazorApp1.Data.Detail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("Id")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnName("Date")
-                        .HasColumnType("datetime");
-
-                    b.Property<Resource>("Resource")
-                        .HasColumnName("ResourceId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ResourceId")
-                        .HasColumnName("ResourceId1")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<Tasks>("Task")
-                        .HasColumnName("TaskId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TaskId")
-                        .HasColumnName("TaskId1")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnName("time")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Detail");
-                });
 
             modelBuilder.Entity("BlazorApp1.Data.Resource", b =>
                 {

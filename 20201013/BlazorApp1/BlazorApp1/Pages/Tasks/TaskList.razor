@@ -1,0 +1,75 @@
+﻿@page "/task/list"
+
+@using BlazorApp1.Data
+@inject TasksService TasksService
+@inject NavigationManager navigation
+@inject IJSRuntime JsRuntime
+
+<h3>List</h3>
+<button class="btn btn-primary" @onclick="()=>Editar(0)">Nuevo</button>
+@if (taskies == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Estimate</th>
+                <th>Expiration</th>
+                <th>State</th>
+                <th>Resource</th>
+                <th>Editar</th>
+                <th>Borrar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var task in taskies)
+            {
+            <tr>
+                <td>@task.Id</td>
+                <td>@task.Title</td>
+                <td>@task.Estimate</td>
+                <td>@task.Expiration</td>
+                <td>@task.State</td>
+                <th>@task.Resource.Name</th>
+                <td><button class="btn btn-primary" @onclick="()=>Editar(task.Id)">Editar</button></td>
+                <td><button class="btn btn-danger" @onclick="()=>Borrar(task.Id)">Borrar</button></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+
+@code {
+    private List<Tasks> taskies;
+
+    protected override async Task OnInitializedAsync()
+    {
+        taskies = await TasksService.FetchTasks();
+    }
+
+    protected void Editar(int id)
+    {
+        navigation.NavigateTo("task/edit/" + id);
+    }
+
+    async Task Borrar(int id)
+    {
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Desea elimiar la Tarea");
+        if (confirmed)
+        {
+            await TasksService.Delete(id);
+        }
+    }
+
+
+
+
+}

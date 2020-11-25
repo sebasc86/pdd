@@ -1,0 +1,111 @@
+﻿
+@page "/detail/edit/{id:int}"
+@using BlazorApp1.Data
+@inject TasksService TasksService
+@inject ResourceService ResourceService
+@inject DetailService DetailService
+@inject NavigationManager navigation
+
+
+<h3>Carga de Detalle</h3>
+
+<EditForm Model="@Modelo" OnValidSubmit="@Guardar">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <h3 class="my-4">Tarea</h3>
+    <div class="container">
+        <div>
+            <div class="mb-3">
+                Date:
+                <InputDate @bind-Value="Modelo.Date" />
+            </div>
+            <div class="mb-3">
+                Time:
+                <InputNumber @bind-Value="Modelo.Time" />
+            </div>
+
+
+            <div class="mb-3">
+                Recurso:
+                <InputSelect class="p-1" @bind-Value="ResourceId">
+                    <option value="0">Elija un Recurso</option>
+
+
+                    @foreach (var item in Resources)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+
+
+                </InputSelect>
+            </div>
+
+            <div class="mb-3">
+                Tarea:
+                <InputSelect class="p-1" @bind-Value="TaskId">
+                    <option value="0">Elija un Recurso</option>
+
+
+                    @foreach (var item in Tasks)
+                    {
+                        <option value="@item.Id">@item.Title</option>
+                    }
+
+
+                </InputSelect>
+            </div>
+
+            <button class="btn btn-primary my-3" type="submit">Guardar</button>
+        </div>
+    </div>
+
+
+</EditForm>
+
+
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public Detail Modelo { get; set; } = new Detail();
+
+    public string ResourceId { get; set; }
+
+    public string TaskId { get; set; }
+
+    private List<Tasks> Tasks = new List<Tasks>();
+
+    private List<Resource> Resources = new List<Resource>();
+
+
+    protected override async Task OnInitializedAsync()
+
+    {
+        if (Id > 0)
+        {
+            Modelo = await DetailService.GetDetailID(Id);
+            ResourceId = Modelo.ResourceId.ToString();
+            TaskId = Modelo.TaskId.ToString();
+        }
+        else
+        {
+            Modelo = new Detail();
+        }
+
+        Resources = await ResourceService.FetchResurce();
+        Tasks = await TasksService.FetchTasks();
+
+    }
+
+
+    private async void Guardar()
+    {
+        Modelo.ResourceId = int.Parse(ResourceId);
+        Modelo.TaskId = int.Parse(TaskId);
+        await DetailService.UpdateDetail(Modelo);
+        navigation.NavigateTo("/detail/list/");
+    }
+
+}

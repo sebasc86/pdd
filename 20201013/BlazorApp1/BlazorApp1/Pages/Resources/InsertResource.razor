@@ -1,0 +1,84 @@
+﻿
+@page "/resource/edit/{id:int}"
+@using BlazorApp1.Data
+@inject UserService UserService
+@inject ResourceService ResourceService
+@inject NavigationManager navigation
+
+
+<h3>Carga de Recurso</h3>
+
+<EditForm Model="@Modelo" OnValidSubmit="@Guardar">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <h3 class="my-4">Tarea</h3>
+    <div class="container">
+        <div>
+            <div class="mb-3">
+                Nombre:
+                <InputText @bind-Value="Modelo.Name" />
+            </div>
+           
+            <div class="mb-3">
+                Usuario:
+                <InputSelect class="p-1" @bind-Value="UserId">
+                    <option value="0">Elija un Usuario</option>
+
+
+                    @foreach (var item in Users)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+
+
+                </InputSelect>
+            </div>
+           
+            <button class="btn btn-primary my-3" type="submit">Guardar</button>
+        </div>
+    </div>
+
+
+</EditForm>
+
+
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public Resource Modelo { get; set; } = new Resource();
+
+    public string UserId { get; set; }
+
+
+    private List<User> Users = new List<User>();
+
+
+
+    protected override async Task OnInitializedAsync()
+
+    {
+        if (Id > 0)
+        {
+            Modelo = await ResourceService.GetResourcID(Id);
+            UserId = Modelo.UserId.ToString();
+        }
+        else
+        {
+            Modelo = new Resource();
+        }
+
+        Users = await UserService.FetchUser();
+    }
+
+
+    private async void Guardar()
+    {
+        Modelo.UserId = int.Parse(UserId);
+        await ResourceService.UpdateResource(Modelo);
+        navigation.NavigateTo("/resource/list/");
+    }
+
+}

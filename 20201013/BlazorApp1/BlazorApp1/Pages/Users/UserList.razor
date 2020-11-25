@@ -1,0 +1,72 @@
+﻿@page "/user/list"
+
+@using BlazorApp1.Data
+@inject UserService UserService
+@inject NavigationManager navigation
+@inject IJSRuntime JsRuntime
+
+<h3>List</h3>
+<button class="btn btn-primary" @onclick="()=>Editar(0)">Nuevo</button>
+@if (users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>LastName</th>
+                <th>Password</th>
+                <th>Editar</th>
+                <th>Borrar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.LastName</td>
+                    <td>@user.Password</td>
+                    <td><button class="btn btn-primary" @onclick="()=>Editar(user.Id)">Editar</button></td>
+                    <td><button class="btn btn-danger" @onclick="()=>Borrar(user.Id)">Borrar</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+
+@code {
+    private List<User> users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await UserService.FetchUser();
+    }
+
+    protected void Editar(int id)
+    {
+        navigation.NavigateTo("user/edit/" + id);
+    }
+
+    async Task Borrar(int id)
+    {
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Desea elimiar la Tarea");
+        if (confirmed)
+        {
+            await UserService.Delete(id);
+        }
+    }
+
+
+
+
+}
+

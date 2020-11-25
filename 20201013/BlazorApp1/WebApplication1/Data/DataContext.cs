@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using ClassLibrary1.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BlazorApp1.Data
+
+namespace WebApplication1.Data
 {
     public class DataContext : DbContext
     {
@@ -37,7 +39,7 @@ namespace BlazorApp1.Data
                 t.Property(p => p.Expiration).HasColumnName("Expiration").HasColumnType("datetime");
                 t.Property(p => p.Estimate).HasColumnName("Estimate").HasColumnType("varchar(50)");
                 t.Property(p => p.State).HasColumnName("State").HasColumnType("varchar(20)");
-                
+
 
 
             });
@@ -47,7 +49,7 @@ namespace BlazorApp1.Data
                 r.ToTable("Resource");
                 r.Property(p => p.Id).ValueGeneratedOnAdd().HasColumnName("Id");
                 r.Property(p => p.Name).HasColumnName("Name").HasColumnType("varchar(50)");
-                
+
             });
 
             modelBuilder.Entity<Detail>(r =>

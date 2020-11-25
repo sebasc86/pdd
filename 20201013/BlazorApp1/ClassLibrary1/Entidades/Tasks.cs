@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorApp1.Data
+namespace ClassLibrary1.Entidades
 {
     public class Tasks
     {

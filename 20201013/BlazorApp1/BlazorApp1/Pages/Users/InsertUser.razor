@@ -1,0 +1,64 @@
+﻿
+@page "/user/edit/{id:int}"
+@using BlazorApp1.Data
+@inject UserService UserService
+@inject NavigationManager navigation
+
+<h3>Carga de Tareas</h3>
+
+<EditForm Model="@Modelo" OnValidSubmit="@Guardar">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <h3 class="my-4">Tarea</h3>
+    <div class="container">
+        <div>
+            <div class="mb-3">
+                Nombre:
+                <InputText @bind-Value="Modelo.Name" />
+            </div>
+            <div class="mb-3">
+                Apellido:
+                <InputText @bind-Value="Modelo.LastName" />
+            </div>
+            <div class="mb-3">
+                Password:
+                <InputText @bind-Value="Modelo.Password" />
+            </div>
+            
+            
+            <button class="btn btn-primary my-3" type="submit">Guardar</button>
+        </div>
+    </div>
+
+
+</EditForm>
+
+
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public User Modelo { get; set; } = new User();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id > 0)
+        {
+            Modelo = await UserService.GetUserID(Id);
+        }
+        else
+        {
+            Modelo = new User();
+        }
+    }
+
+
+    private async void Guardar()
+    {
+        await UserService.UpdateUser(Modelo);
+        navigation.NavigateTo("/user/list/");
+    }
+
+}
