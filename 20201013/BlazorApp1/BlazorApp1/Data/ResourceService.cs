@@ -28,12 +28,15 @@ namespace BlazorApp1.Data
                      
         //}
 
-        public async Task<Resource> GetResourcID(int Id)
+        public async Task<Resource> GetResourceID(int Id)
         {
-            var ctx = new DataContext();
-            return await ctx.Resources.Where(i => i.Id == Id).FirstOrDefaultAsync();
-           // Console.WriteLine($"-----Fetch Task----- \nTitulo: {task.Title} - Expiracion: {task.Expiration} - Estado: {task.State}");
-            
+
+            // Console.WriteLine($"-----Fetch Task----- \nTitulo: {task.Title} - Expiracion: {task.Expiration} - Estado: {task.State}");
+
+            var remoteService = RestService.For<IRemoteService>("https://localhost:44375/api/");
+            return await remoteService.GetResource(Id);
+
+
 
         }
 
@@ -50,7 +53,6 @@ namespace BlazorApp1.Data
         public async Task<Resource> SaveResource(Resource valor)
         {
             var remoteService = RestService.For<IRemoteService>("https://localhost:44375/api/");
-
 
             return await remoteService.CreateResource(valor);
         }

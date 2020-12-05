@@ -27,6 +27,10 @@ namespace BlazorApp1.Data
         [Post("/User")]
         Task<User> CreateUser(User valor);
 
+        [Delete("/User/{id}")]
+        Task<User> DeleteUser(int id);
+
+
         [Get("/Detail")]
         Task<List<Detail>> GetAllDetails();
 

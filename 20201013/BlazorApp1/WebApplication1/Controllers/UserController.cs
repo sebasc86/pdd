@@ -63,5 +63,19 @@ namespace WebApplication1.Controllers
 
         }
 
+        [HttpDelete("{id}")]
+        public User Delete(int id)
+        {
+
+            /*tiene una cache local si existe esa entidad dentro de la local la desengancha del contexto y agrega la nueva*/
+            //var local = _context.Users.Local.FirstOrDefault(e => e.Id.Equals(id));
+            var user = _context.Users.Where(s => s.Id == id).FirstOrDefault();
+            _context.Entry(user).State = EntityState.Deleted;
+
+            _context.SaveChanges();
+
+            return user;
+        }
+
     }
 }

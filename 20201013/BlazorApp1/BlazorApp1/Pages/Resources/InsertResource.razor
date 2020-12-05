@@ -27,7 +27,7 @@
 
                     @foreach (var item in Users)
                     {
-                        <option value="@item.Id">@(item.LastName + " " + item.Name)</option>
+                        <option value="@item.Id">@item.Name</option>
                     }
 
 
@@ -62,7 +62,7 @@
     {
         if (Id > 0)
         {
-            Modelo = await ResourceService.GetResourcID(Id);
+            Modelo = await ResourceService.GetResourceID(Id);
             UserId = Modelo.UserId.ToString();
         }
         else

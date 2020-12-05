@@ -26,11 +26,9 @@ namespace WebApplication1.Controllers
 
         public List<Resource> Get()
         {
-            return _context.Resources.Include(i => i.User).ToList(); ; 
+            return _context.Resources.Include(i => i.User).ToList(); 
         }
-
-       
-
+           
 
         [HttpGet("{id}")]
 
