@@ -11,7 +11,7 @@
 <EditForm Model="@Modelo" OnValidSubmit="@Guardar">
     <DataAnnotationsValidator />
     <ValidationSummary />
-    <h3 class="my-4">Tarea</h3>
+    <h3 class="my-4">Recurso</h3>
     <div class="container">
         <div>
             <div class="mb-3">
@@ -27,7 +27,7 @@
 
                     @foreach (var item in Users)
                     {
-                        <option value="@item.Id">@item.Name</option>
+                        <option value="@item.Id">@(item.LastName + " " + item.Name)</option>
                     }
 
 
@@ -70,14 +70,14 @@
             Modelo = new Resource();
         }
 
-        Users = await UserService.FetchUser();
+        Users = await UserService.GetUsers();
     }
 
 
     private async void Guardar()
     {
         Modelo.UserId = int.Parse(UserId);
-        await ResourceService.UpdateResource(Modelo);
+        await ResourceService.SaveResource(Modelo);
         navigation.NavigateTo("/resource/list/");
     }
 

@@ -4,12 +4,12 @@
 @inject UserService UserService
 @inject NavigationManager navigation
 
-<h3>Carga de Tareas</h3>
+<h3>Carga de Usuarios</h3>
 
 <EditForm Model="@Modelo" OnValidSubmit="@Guardar">
     <DataAnnotationsValidator />
     <ValidationSummary />
-    <h3 class="my-4">Tarea</h3>
+    <h3 class="my-4">Usuario</h3>
     <div class="container">
         <div>
             <div class="mb-3">
@@ -57,7 +57,7 @@
 
     private async void Guardar()
     {
-        await UserService.UpdateUser(Modelo);
+        await UserService.SaveUser(Modelo);
         navigation.NavigateTo("/user/list/");
     }
 

@@ -5,7 +5,8 @@
 @inject NavigationManager navigation
 @inject IJSRuntime JsRuntime
 
-<h3>List</h3>
+
+<h3>Lista Usuarios</h3>
 <button class="btn btn-primary" @onclick="()=>Editar(0)">Nuevo</button>
 @if (users == null)
 {
@@ -17,9 +18,9 @@ else
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>LastName</th>
-                <th>Password</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Contraseña</th>
                 <th>Editar</th>
                 <th>Borrar</th>
             </tr>
@@ -48,7 +49,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        users = await UserService.FetchUser();
+        users = await UserService.GetUsers();
+
     }
 
     protected void Editar(int id)

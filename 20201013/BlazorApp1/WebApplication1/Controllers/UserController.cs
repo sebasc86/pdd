@@ -31,5 +31,37 @@ namespace WebApplication1.Controllers
 
         }
 
+        [HttpGet("{id}")]
+        public User Get(int id)
+        {
+            return _context.Users.Where(i => i.Id == id).Single();
+        }
+
+        [HttpPost]
+        public User Post(User valor)
+        {
+
+            /*tiene una cache local si existe esa entidad dentro de la local la desengancha del contexto y agrega la nueva*/
+            var local = _context.Users.Local.FirstOrDefault(e => e.Id.Equals(valor.Id));
+
+            if (local != null)
+            {
+                _context.Entry(local).State = EntityState.Detached;
+            }
+
+            if (valor.Id == 0)
+            {
+                _context.Entry(valor).State = EntityState.Added;
+            }
+            else
+            {
+                _context.Entry(valor).State = EntityState.Modified;
+            }
+            _context.SaveChanges();
+            return valor;
+
+
+        }
+
     }
 }

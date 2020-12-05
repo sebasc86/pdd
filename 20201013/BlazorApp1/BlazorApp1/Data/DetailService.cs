@@ -19,14 +19,14 @@ namespace BlazorApp1.Data
             context = _context;
         }
 
-        public Detail[] GetDetails()
-        {
+        //public Detail[] GetDetails()
+        //{
 
-            Detail[] result = new Detail[2];
+        //    Detail[] result = new Detail[2];
             
-            return result;                      
+        //    return result;                      
                      
-        }
+        //}
 
         public  async Task<Detail> GetDetailID(int Id)
         {
@@ -37,7 +37,7 @@ namespace BlazorApp1.Data
 
         }
 
-        public async Task<List<Detail>> FetchDetails()
+        public async Task<List<Detail>> GetDetails()
         {
             var remoteService = RestService.For<IRemoteService>("https://localhost:44375/api/");
             return await remoteService.GetAllDetails();
@@ -47,24 +47,32 @@ namespace BlazorApp1.Data
 
         }
 
-
-
-        public async Task<Detail> UpdateDetail(Detail value)
+        public async Task<Detail> SaveDetail(Detail valor)
         {
-            var ctx = new DataContext();
+            var remoteService = RestService.For<IRemoteService>("https://localhost:44375/api/");
 
-            if (value.Id == 0)
-            {
-                await ctx.Details.AddAsync(value);
-            }
-            else
-            {
-                ctx.Details.Update(value);
-            }
 
-            await ctx.SaveChangesAsync();
-            return value;
+            return await remoteService.CreateDetail(valor);
         }
+
+
+
+        //public async Task<Detail> UpdateDetail(Detail value)
+        //{
+        //    var ctx = new DataContext();
+
+        //    if (value.Id == 0)
+        //    {
+        //        await ctx.Details.AddAsync(value);
+        //    }
+        //    else
+        //    {
+        //        ctx.Details.Update(value);
+        //    }
+
+        //    await ctx.SaveChangesAsync();
+        //    return value;
+        //}
 
 
         public async Task<bool> Delete(int Id)

@@ -19,11 +19,11 @@
                 <InputText @bind-Value="Modelo.Title" />
             </div>
             <div class="mb-3">
-                Vencimiento:
+                Expiracion :
                 <InputDate @bind-Value="Modelo.Expiration" />
             </div>
             <div class="mb-3">
-                Vencimiento:
+                Prioridad Estimada:
                 <InputText @bind-Value="Modelo.Estimate" />
             </div>
 
@@ -74,6 +74,7 @@
         if (Id > 0)
         {
             Modelo = await TasksService.GetTaskID(Id);
+            
             ResourceId = Modelo.ResourceId.ToString();
         }
         else
@@ -81,14 +82,14 @@
             Modelo = new Tasks();
         }
 
-        Resources = await ResourceService.FetchResurce();
+        Resources = await ResourceService.GetResources();
     }
 
 
     private async void Guardar()
     {
         Modelo.ResourceId = int.Parse(ResourceId);
-        await TasksService.UpdateTask(Modelo);
+        await TasksService.SaveTasks(Modelo);
         navigation.NavigateTo("/task/list/");
     }
 

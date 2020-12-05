@@ -16,7 +16,7 @@ namespace WebApplication1.Controllers
     {
         private readonly DataContext _context;
 
-        public TasksController (DataContext context)
+        public TasksController(DataContext context)
         {
             _context = context;
         }
@@ -26,6 +26,40 @@ namespace WebApplication1.Controllers
         public List<Tasks> Get()
         {
             return _context.Tasks.Include(i => i.Resource).ToList();
+        }
+
+        [HttpGet("{id}")]
+
+
+        public Tasks Get(int id)
+        {
+            return _context.Tasks.Where(i => i.Id == id).Include(i => i.Resource).Single();
+        }
+
+
+        [HttpPost]
+        public IActionResult Post(Tasks valor)
+        {
+
+            /*tiene una cache local si existe esa entidad dentro de la local la desengancha del contexto y agrega la nueva*/
+            var local = _context.Tasks.Local.FirstOrDefault(e => e.Id.Equals(valor.Id));
+
+            if(local != null)
+            {
+                _context.Entry(local).State = EntityState.Detached;
+            }
+
+            if (valor.Id == 0)
+            {
+                _context.Entry(valor).State = EntityState.Added;
+            } else
+            {
+                _context.Entry(valor).State = EntityState.Modified;
+            }
+            _context.SaveChanges();
+            return Ok(valor);
+
+
         }
     }
 }

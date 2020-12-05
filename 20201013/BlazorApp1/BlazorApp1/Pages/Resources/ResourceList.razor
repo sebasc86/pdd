@@ -5,7 +5,7 @@
 @inject NavigationManager navigation
 @inject IJSRuntime JsRuntime
 
-<h3>List</h3>
+<h3>Lista Recursos Asociados</h3>
 <button class="btn btn-primary" @onclick="()=>Editar(0)">Nuevo</button>
 @if (resources == null)
 {
@@ -16,10 +16,10 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Apellido</th>
-                <th>User</th>
+                <th>Id Recurso</th>
+                <th>Nombre Recursos</th>
+                <th>Usuario Nombre</th>
+                <th>Usuario Apellido</th>
                 <th>Editar</th>
                 <th>Borrar</th>
             </tr>
@@ -48,7 +48,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        resources = await ResourceService.FetchResurce();
+        resources = await ResourceService.GetResources();
     }
 
     protected void Editar(int id)

@@ -19,14 +19,14 @@ namespace BlazorApp1.Data
             context = _context;
         }
 
-        public Resource[] GetResources()
-        {
+        //public Resource[] GetResources()
+        //{
 
-            Resource[] result = new Resource[2];
+        //    Resource[] result = new Resource[2];
             
-            return result;                      
+        //    return result;                      
                      
-        }
+        //}
 
         public async Task<Resource> GetResourcID(int Id)
         {
@@ -37,7 +37,7 @@ namespace BlazorApp1.Data
 
         }
 
-        public static async Task<List<Resource>> FetchResurce()
+        public static async Task<List<Resource>> GetResources()
         {
             /*var ctx = new DataContext();
             return ctx.Resources.Include(i=>i.User).ToList();*/
@@ -47,23 +47,31 @@ namespace BlazorApp1.Data
 
         }
 
-
-        public async Task<Resource> UpdateResource(Resource value)
+        public async Task<Resource> SaveResource(Resource valor)
         {
-            var ctx = new DataContext();
+            var remoteService = RestService.For<IRemoteService>("https://localhost:44375/api/");
 
-            if (value.Id == 0)
-            {
-                await ctx.Resources.AddAsync(value);
-            }
-            else
-            {
-                ctx.Resources.Update(value);
-            }
 
-            await ctx.SaveChangesAsync();
-            return value;
+            return await remoteService.CreateResource(valor);
         }
+
+
+        //public async Task<Resource> UpdateResource(Resource value)
+        //{
+        //    var ctx = new DataContext();
+
+        //    if (value.Id == 0)
+        //    {
+        //        await ctx.Resources.AddAsync(value);
+        //    }
+        //    else
+        //    {
+        //        ctx.Resources.Update(value);
+        //    }
+
+        //    await ctx.SaveChangesAsync();
+        //    return value;
+        //}
 
 
         public async Task<bool> Delete(int Id)
@@ -80,8 +88,8 @@ namespace BlazorApp1.Data
 
         public async Task<List<User>> GetUser()
         {
-            var ctx = new DataContext();
-            return await ctx.Users.ToListAsync();
+            var remoteService = RestService.For<IRemoteService>("https://localhost:44375/api/");
+            return await remoteService.GetAllUsers();
         }
 
 

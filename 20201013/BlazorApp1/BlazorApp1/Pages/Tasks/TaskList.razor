@@ -4,8 +4,9 @@
 @inject TasksService TasksService
 @inject NavigationManager navigation
 @inject IJSRuntime JsRuntime
+@inject UserService UserService
 
-<h3>List</h3>
+<h3>Lista Tareas</h3>
 <button class="btn btn-primary" @onclick="()=>Editar(0)">Nuevo</button>
 @if (taskies == null)
 {
@@ -17,11 +18,11 @@ else
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Title</th>
-                <th>Estimate</th>
-                <th>Expiration</th>
-                <th>State</th>
-                <th>Resource</th>
+                <th>Titulo</th>
+                <th>Estimado</th>
+                <th>Prioridad</th>
+                <th>Estado</th>
+                <th>Recurso</th>
                 <th>Editar</th>
                 <th>Borrar</th>
             </tr>
@@ -29,16 +30,16 @@ else
         <tbody>
             @foreach (var task in taskies)
             {
-            <tr>
-                <td>@task.Id</td>
-                <td>@task.Title</td>
-                <td>@task.Estimate</td>
-                <td>@task.Expiration</td>
-                <td>@task.State</td>
-                <th>@task.Resource.Name</th>
-                <td><button class="btn btn-primary" @onclick="()=>Editar(task.Id)">Editar</button></td>
-                <td><button class="btn btn-danger" @onclick="()=>Borrar(task.Id)">Borrar</button></td>
-            </tr>
+                <tr>
+                    <td>@task.Id</td>
+                    <td>@task.Title</td>
+                    <td>@task.Estimate</td>
+                    <td>@task.Expiration</td>
+                    <td>@task.State</td>
+                    <th>@task.Resource.Name</th>
+                    <td><button class="btn btn-primary" @onclick="()=>Editar(task.Id)">Editar</button></td>
+                    <td><button class="btn btn-danger" @onclick="()=>Borrar(task.Id)">Borrar</button></td>
+                </tr>
             }
         </tbody>
     </table>
@@ -52,7 +53,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        taskies = await TasksService.FetchTasks();
+        taskies = await TasksService.GetTasks();
+
     }
 
     protected void Editar(int id)

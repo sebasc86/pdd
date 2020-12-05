@@ -27,9 +27,44 @@ namespace WebApplication1.Controllers
         public List<Detail> Get()
         {
             return _context.Details.Include(i => i.Task).Include(i => i.Resource).ToList();
-            /*return _context.Details.ToList();*/
 
         }
+
+
+        [HttpGet("{id}")]
+
+
+        public Detail Get(int id)
+        {
+            return _context.Details.Where(i => i.Id == id).Include(i => i.Task).Include(i => i.Resource).Single();
+        }
+
+        [HttpPost]
+        public IActionResult Post(Detail valor)
+        {
+
+            /*tiene una cache local si existe esa entidad dentro de la local la desengancha del contexto y agrega la nueva*/
+            var local = _context.Details.Local.FirstOrDefault(e => e.Id.Equals(valor.Id));
+
+            if (local != null)
+            {
+                _context.Entry(local).State = EntityState.Detached;
+            }
+
+            if (valor.Id == 0)
+            {
+                _context.Entry(valor).State = EntityState.Added;
+            }
+            else
+            {
+                _context.Entry(valor).State = EntityState.Modified;
+            }
+            _context.SaveChanges();
+            return Ok(valor);
+
+
+        }
+
 
     }
 }

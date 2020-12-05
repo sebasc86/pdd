@@ -5,7 +5,7 @@
 @inject NavigationManager navigation
 @inject IJSRuntime JsRuntime
 
-<h3>List</h3>
+<h3>Lista Detalles</h3>
 <button class="btn btn-primary" @onclick="()=>Editar(0)">Nuevo</button>
 @if (details == null)
 {
@@ -50,11 +50,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        details = await DetailService.FetchDetails();
+        details = await DetailService.GetDetails();
     }
 
     protected void Editar(int id)
     {
+
         navigation.NavigateTo("detail/edit/" + id);
     }
 

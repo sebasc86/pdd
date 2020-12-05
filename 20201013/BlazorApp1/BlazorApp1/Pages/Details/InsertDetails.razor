@@ -12,7 +12,7 @@
 <EditForm Model="@Modelo" OnValidSubmit="@Guardar">
     <DataAnnotationsValidator />
     <ValidationSummary />
-    <h3 class="my-4">Tarea</h3>
+    <h3 class="my-4">Detalle</h3>
     <div class="container">
         <div>
             <div class="mb-3">
@@ -94,8 +94,8 @@
             Modelo = new Detail();
         }
 
-        Resources = await ResourceService.FetchResurce();
-        Tasks = await TasksService.FetchTasks();
+        Resources = await ResourceService.GetResources();
+        Tasks = await TasksService.GetTasks();
 
     }
 
@@ -104,7 +104,7 @@
     {
         Modelo.ResourceId = int.Parse(ResourceId);
         Modelo.TaskId = int.Parse(TaskId);
-        await DetailService.UpdateDetail(Modelo);
+        await DetailService.SaveDetail(Modelo);
         navigation.NavigateTo("/detail/list/");
     }
 
