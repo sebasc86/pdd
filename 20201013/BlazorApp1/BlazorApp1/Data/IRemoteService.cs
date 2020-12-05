@@ -18,6 +18,11 @@ namespace BlazorApp1.Data
         [Post("/Tasks")]
         Task<Tasks> CreateTasks(Tasks valor);
 
+        [Delete("/Tasks/{id}")]
+        Task<Tasks> DeleteTasks(int id);
+
+
+
         [Get("/User")]
         Task<List<User>> GetAllUsers();
 
@@ -40,6 +45,11 @@ namespace BlazorApp1.Data
         [Post("/Detail")]
         Task<Detail> CreateDetail(Detail valor);
 
+        [Delete("/Detail/{id}")]
+        Task<Detail> DeleteDetail(int id);
+
+
+
         [Get("/Resource")]
         Task<List<Resource>> GetAllResources();
 
@@ -48,6 +58,9 @@ namespace BlazorApp1.Data
 
         [Post("/Resource")]
         Task<Resource> CreateResource(Resource valor);
+
+        [Delete("/Resource/{id}")]
+        Task<Resource> DeleteResource(int id);
 
 
     }

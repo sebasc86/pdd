@@ -19,19 +19,11 @@ namespace BlazorApp1.Data
             context = _context;
         }
 
-        //public Resource[] GetResources()
-        //{
-
-        //    Resource[] result = new Resource[2];
-            
-        //    return result;                      
-                     
-        //}
+        
 
         public async Task<Resource> GetResourceID(int Id)
         {
 
-            // Console.WriteLine($"-----Fetch Task----- \nTitulo: {task.Title} - Expiracion: {task.Expiration} - Estado: {task.State}");
 
             var remoteService = RestService.For<IRemoteService>("https://localhost:44375/api/");
             return await remoteService.GetResource(Id);
@@ -42,8 +34,7 @@ namespace BlazorApp1.Data
 
         public static async Task<List<Resource>> GetResources()
         {
-            /*var ctx = new DataContext();
-            return ctx.Resources.Include(i=>i.User).ToList();*/
+        
 
             var remoteService = RestService.For<IRemoteService>("https://localhost:44375/api/");
             return await remoteService.GetAllResources();
@@ -58,35 +49,13 @@ namespace BlazorApp1.Data
         }
 
 
-        //public async Task<Resource> UpdateResource(Resource value)
-        //{
-        //    var ctx = new DataContext();
-
-        //    if (value.Id == 0)
-        //    {
-        //        await ctx.Resources.AddAsync(value);
-        //    }
-        //    else
-        //    {
-        //        ctx.Resources.Update(value);
-        //    }
-
-        //    await ctx.SaveChangesAsync();
-        //    return value;
-        //}
-
-
-        public async Task<bool> Delete(int Id)
+        public async Task<bool> Delete(int id)
         {
-            var ctx = new DataContext();
-            Resource task = await ctx.Resources.Where(i => i.Id == Id).SingleAsync();
-
-            ctx.Resources.Remove(task);
-        
-
-            await ctx.SaveChangesAsync();
+            var remoteService = RestService.For<IRemoteService>("https://localhost:44375/api/");
+            await remoteService.DeleteResource(id);
             return true;
         }
+
 
         public async Task<List<User>> GetUser()
         {

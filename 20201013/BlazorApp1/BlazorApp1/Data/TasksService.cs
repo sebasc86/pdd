@@ -23,9 +23,7 @@ namespace BlazorApp1.Data
 
         public static async Task<Tasks> GetTaskID(int Id)
         {
-            //var ctx = new DataContext();
-            //return await ctx.Tasks.Where(i => i.Id == Id).FirstOrDefaultAsync();
-            // Console.WriteLine($"-----Fetch Task----- \nTitulo: {task.Title} - Expiracion: {task.Expiration} - Estado: {task.State}");
+
             var remoteService = RestService.For<IRemoteService>("https://localhost:44375/api/");
             return await remoteService.GetTasks(Id);
 
@@ -34,9 +32,7 @@ namespace BlazorApp1.Data
 
         public static async Task<List<Tasks>> GetTasks()
         {
-           /* var ctx = new DataContext();
-            return ctx.Tasks.Include(i=>i.Resource).ToList();*/
-            //return await ctx.Tareas.Include(i => i.Responsable).ToListAsync();
+    
             var remoteService = RestService.For<IRemoteService>("https://localhost:44375/api/");
             return await remoteService.GetAllTasks();
 
@@ -54,36 +50,9 @@ namespace BlazorApp1.Data
             return await remoteService.CreateTasks(valor);
         }
 
-        //public async Task<Tasks> UpdateTask(Tasks value)
-        //{
-        //    var ctx = new DataContext();
-
-        //    if (value.Id == 0)
-        //    {
-        //        await ctx.Tasks.AddAsync(value);
-        //    }
-        //    else
-        //    {
-        //        ctx.Tasks.Update(value);
-        //    }
-
-        //    await ctx.SaveChangesAsync();
-        //    return value;
-        //}
 
 
-
-        public async Task<bool> Delete(int Id)
-        {
-            var ctx = new DataContext();
-            Tasks task = await ctx.Tasks.Where(i => i.Id == Id).SingleAsync();
-
-            ctx.Tasks.Remove(task);
-
-
-            await ctx.SaveChangesAsync();
-            return true;
-        }
+             
 
         public async Task<List<Resource>> GetResource()
         {
@@ -91,6 +60,13 @@ namespace BlazorApp1.Data
             return await remoteService.GetAllResources();
         }
 
+
+        public async Task<bool> Delete(int id)
+        {
+            var remoteService = RestService.For<IRemoteService>("https://localhost:44375/api/");
+            await remoteService.DeleteTasks(id);
+            return true;
+        }
 
 
     }

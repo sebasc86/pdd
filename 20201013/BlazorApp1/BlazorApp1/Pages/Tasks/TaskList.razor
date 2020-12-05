@@ -68,6 +68,8 @@ else
         if (confirmed)
         {
             await TasksService.Delete(id);
+
+            taskies = await TasksService.GetTasks();
         }
     }
 

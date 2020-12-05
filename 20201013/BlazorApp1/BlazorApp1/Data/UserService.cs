@@ -43,22 +43,10 @@ namespace BlazorApp1.Data
             return await remoteService.CreateUser(valor);
         }
 
-        //public async Task<bool> Delete(int Id)
-        //{
-        //    var ctx = new DataContext();
-        //    User user = await ctx.Users.Where(i => i.Id == Id).SingleAsync();
 
-        //    ctx.Users.Remove(user);
-
-
-        //    await ctx.SaveChangesAsync();
-        //    return true;
-        //}
-
-
-        public async Task<bool> DeleteUserId(int id)
+        public async Task<bool> Delete(int id)
         {
-            var remoteService = RestService.For<IRemoteService>("https://localhost:44373/api/");
+            var remoteService = RestService.For<IRemoteService>("https://localhost:44375/api/");
             await remoteService.DeleteUser(id);
             return true;
         }

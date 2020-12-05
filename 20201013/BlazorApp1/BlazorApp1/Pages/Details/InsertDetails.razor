@@ -85,6 +85,7 @@
     {
         if (Id > 0)
         {
+             
             Modelo = await DetailService.GetDetailID(Id);
             ResourceId = Modelo.ResourceId.ToString();
             TaskId = Modelo.TaskId.ToString();
@@ -109,3 +110,4 @@
     }
 
 }
+

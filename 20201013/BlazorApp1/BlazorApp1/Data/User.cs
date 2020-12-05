@@ -28,8 +28,6 @@ namespace BlazorApp1.Data
 
 
 
-        //public int ResourceId { get; set; }
-        //public Resource Liable { get; set; }
 
 
 

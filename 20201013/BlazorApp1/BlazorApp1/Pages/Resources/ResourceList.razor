@@ -62,6 +62,8 @@ else
         if (confirmed)
         {
             await ResourceService.Delete(id);
+
+            resources = await ResourceService.GetResources();
         }
     }
 

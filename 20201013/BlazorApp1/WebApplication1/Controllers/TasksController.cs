@@ -61,5 +61,29 @@ namespace WebApplication1.Controllers
 
 
         }
+
+        [HttpDelete("{id}")]
+        public async Task<Tasks> Delete(int id)
+        {
+
+
+            //var local = _context.Users.Local.FirstOrDefault(e => e.Id.Equals(id));
+            var task = _context.Tasks.Where(s => s.Id == id).FirstOrDefault();
+
+
+            if (task != null)
+            {
+                _context.Entry(task).State = EntityState.Detached;
+            }
+
+
+            _context.Entry(task).State = EntityState.Deleted;
+
+
+
+            await _context.SaveChangesAsync();
+
+            return task;
+        }
     }
 }

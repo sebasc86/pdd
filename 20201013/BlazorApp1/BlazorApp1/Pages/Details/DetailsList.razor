@@ -65,6 +65,8 @@ else
         if (confirmed)
         {
             await DetailService.Delete(id);
+
+            await DetailService.GetDetails();
         }
     }
 

@@ -32,8 +32,6 @@ namespace WebApplication1.Controllers
 
 
         [HttpGet("{id}")]
-
-
         public Detail Get(int id)
         {
             return _context.Details.Where(i => i.Id == id).Include(i => i.Task).Include(i => i.Resource).Single();
@@ -63,6 +61,31 @@ namespace WebApplication1.Controllers
             return Ok(valor);
 
 
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<Detail> Delete(int id)
+        {
+
+
+            //var local = _context.Users.Local.FirstOrDefault(e => e.Id.Equals(id));
+            var detail = _context.Details.Where(s => s.Id == id).FirstOrDefault();
+
+
+            if (detail != null)
+            {
+                _context.Entry(detail).State = EntityState.Detached;
+            }
+
+
+            _context.Entry(detail).State = EntityState.Deleted;
+
+
+
+            await _context.SaveChangesAsync();
+
+            return detail;
         }
 
 
